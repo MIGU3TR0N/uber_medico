@@ -106,6 +106,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: Text('Iniciar sesion', style: TextStyle(color: Colors.white),),
                   ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/register");
+                    },
+                    child: Text('Registrarme', style: TextStyle(color: Colors.white),),
+                  ),
                   SizedBox(height: 16.0),
                   TextButton(
                     onPressed: () {
