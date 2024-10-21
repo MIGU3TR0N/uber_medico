@@ -18,7 +18,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _apellidoMController = TextEditingController();
   final _domicilioController = TextEditingController();
   final _telefonoController = TextEditingController();
-  String? selectedRole;
+  String? selectedRole = "Paciente";
   int opcion = 0;
   final List<String> roles = ['Paciente', 'Conductor', 'Medico'];
   @override
@@ -214,6 +214,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
+                          if (opcion == 1) {
+                            Navigator.pushNamed(context, "/conDetails");
+                          }
                           if (opcion == 2) {
                             Navigator.pushNamed(context, "/docDetails");
                           }

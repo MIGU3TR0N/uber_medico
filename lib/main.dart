@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uber_medico/screens/conductor_data_screen.dart';
 import 'package:uber_medico/screens/doctor_data_screen.dart';
 import 'package:uber_medico/screens/home_screen.dart';
 import 'package:uber_medico/screens/login_screen.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/register": (context) => const RegisterScreen(),
         "/docDetails": (context) => const DoctorDataScreen(),
+        "/conDetails": (context) => ConductorDataScreen(),
       },
     );
   }
