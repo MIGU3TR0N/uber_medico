@@ -19,20 +19,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _domicilioController = TextEditingController();
   final _telefonoController = TextEditingController();
   String? selectedRole;
-  int opcion=0;
+  int opcion = 0;
   final List<String> roles = ['Paciente', 'Conductor', 'Medico'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF1c2120),
+      backgroundColor: const Color(0xFF1c2120),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         //backgroundColor: Colors.black,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.fill,
-              image: AssetImage('assets/fondo.png',),
+              image: AssetImage(
+                'assets/fondo.png',
+              ),
             ),
           ),
         ),
@@ -43,27 +45,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: DropdownButton<String>(
-                hint: Text('Seleccione el tipo de usuario', style: TextStyle(color: Colors.black)),
+                hint: const Text('Seleccione el tipo de usuario',
+                    style: TextStyle(color: Colors.black)),
                 value: selectedRole,
                 onChanged: (String? newValue) {
                   setState(() {
                     selectedRole = newValue; // Update the selected role
-                    switch(selectedRole){
+                    switch (selectedRole) {
                       case 'Conductor':
-                      opcion=1;
-                      break;
+                        opcion = 1;
+                        break;
                       case 'Medico':
-                      opcion=2;
-                      break;
+                        opcion = 2;
+                        break;
                       default:
-                      opcion=0;
+                        opcion = 0;
                     }
                   });
                 },
                 items: roles.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value, style: TextStyle(color: Colors.black)),
+                    child: Text(value,
+                        style: const TextStyle(color: Colors.black)),
                   );
                 }).toList(),
               ),
@@ -74,10 +78,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(60))
-        ),
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(60))),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
@@ -89,12 +92,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Car Icon (Use a suitable asset)
-                    Text('Crear cuenta', textAlign: TextAlign.center, style: TextStyle(fontSize: 28, ),), // Replace with your image
-                    
-                    SizedBox(height: 10),
-            
+                    const Text(
+                      'Crear cuenta',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 28,
+                      ),
+                    ), // Replace with your image
+
+                    const SizedBox(height: 10),
+
                     TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Nombre',
                         border: OutlineInputBorder(),
                       ),
@@ -106,10 +115,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 10),
-            
+                    const SizedBox(height: 10),
+
                     TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Apellido Paterno',
                         border: OutlineInputBorder(),
                       ),
@@ -121,10 +130,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 10),
-            
+                    const SizedBox(height: 10),
+
                     TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Apellido Materno',
                         border: OutlineInputBorder(),
                       ),
@@ -136,10 +145,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 10),
-                    
+                    const SizedBox(height: 10),
+
                     TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Correo',
                         border: OutlineInputBorder(),
                       ),
@@ -151,10 +160,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 10),
-                    
+                    const SizedBox(height: 10),
+
                     TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Contraseña',
                         border: OutlineInputBorder(),
                       ),
@@ -167,10 +176,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 10),
-            
+                    const SizedBox(height: 10),
+
                     TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Domicilio',
                         border: OutlineInputBorder(),
                       ),
@@ -182,10 +191,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 10),
-            
+                    const SizedBox(height: 10),
+
                     TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Telefono',
                         border: OutlineInputBorder(),
                       ),
@@ -197,19 +206,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 10),
-                    
+                    const SizedBox(height: 10),
+
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
                       ),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          if(opcion==2)
+                          if (opcion == 2) {
                             Navigator.pushNamed(context, "/docDetails");
+                          }
                         }
                       },
-                      child: Text('Crear', style: TextStyle(color: Colors.white),),
+                      child: const Text(
+                        'Crear',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),

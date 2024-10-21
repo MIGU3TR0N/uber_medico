@@ -21,15 +21,17 @@ class _DoctorDataScreenState extends State<DoctorDataScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF1c2120),
+      backgroundColor: const Color(0xFF1c2120),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         //backgroundColor: Colors.black,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.fill,
-              image: AssetImage('assets/fondo.png',),
+              image: AssetImage(
+                'assets/fondo.png',
+              ),
             ),
           ),
         ),
@@ -42,10 +44,9 @@ class _DoctorDataScreenState extends State<DoctorDataScreen> {
         toolbarHeight: 100,
       ),
       body: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(60))
-        ),
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(60))),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -56,12 +57,18 @@ class _DoctorDataScreenState extends State<DoctorDataScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // Car Icon (Use a suitable asset)
-                  Text('Registro de Medico', textAlign: TextAlign.center, style: TextStyle(fontSize: 38, ),), // Replace with your image
-        
-                  SizedBox(height: 20),
-        
+                  const Text(
+                    'Registro de Medico',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 38,
+                    ),
+                  ), // Replace with your image
+
+                  const SizedBox(height: 20),
+
                   TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Especialidad',
                       border: OutlineInputBorder(),
                     ),
@@ -73,10 +80,10 @@ class _DoctorDataScreenState extends State<DoctorDataScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
-        
+                  const SizedBox(height: 20),
+
                   TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Hora de inicio',
                       border: OutlineInputBorder(),
                     ),
@@ -88,10 +95,10 @@ class _DoctorDataScreenState extends State<DoctorDataScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
                   TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Hora de fin',
                       border: OutlineInputBorder(),
                     ),
@@ -103,10 +110,10 @@ class _DoctorDataScreenState extends State<DoctorDataScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
                   TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Dias laborales',
                       border: OutlineInputBorder(),
                     ),
@@ -118,23 +125,25 @@ class _DoctorDataScreenState extends State<DoctorDataScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
                   ElevatedButton(
                     onPressed: () async {
                       await _pickFile();
                     },
-                    child: Text('Subir cedula profecional', style: TextStyle(color: Colors.black)),
+                    child: const Text('Subir cedula profecional',
+                        style: TextStyle(color: Colors.black)),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () async {
                       await _pickFileINE();
                     },
-                    child: Text('Subir INE', style: TextStyle(color: Colors.black)),
+                    child: const Text('Subir INE',
+                        style: TextStyle(color: Colors.black)),
                   ),
-                  SizedBox(height: 20),
-        
+                  const SizedBox(height: 20),
+
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
@@ -145,9 +154,12 @@ class _DoctorDataScreenState extends State<DoctorDataScreen> {
                         print('Login successful!');
                       }
                     },
-                    child: Text('Crear cuenta', style: TextStyle(color: Colors.white),),
+                    child: const Text(
+                      'Crear cuenta',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
-                  ],
+                ],
               ),
             ),
           ),
@@ -155,6 +167,7 @@ class _DoctorDataScreenState extends State<DoctorDataScreen> {
       ),
     );
   }
+
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -163,10 +176,12 @@ class _DoctorDataScreenState extends State<DoctorDataScreen> {
 
     if (result != null) {
       setState(() {
-        selectedFile = result.files.single.path; // Store the path of the selected file
+        selectedFile =
+            result.files.single.path; // Store the path of the selected file
       });
     }
   }
+
   Future<void> _pickFileINE() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -175,7 +190,8 @@ class _DoctorDataScreenState extends State<DoctorDataScreen> {
 
     if (result != null) {
       setState(() {
-        selectedFileINE = result.files.single.path; // Store the path of the selected file
+        selectedFileINE =
+            result.files.single.path; // Store the path of the selected file
       });
     }
   }
