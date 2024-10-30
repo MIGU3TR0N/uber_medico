@@ -14,12 +14,12 @@ class _LoginScreenState extends State<LoginScreen> {
   // Controllers for the text fields
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF1c2120),
       appBar: AppBar(
-        //backgroundColor: Colors.black,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -61,17 +61,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Car Icon (Use a suitable asset)
                   const Text(
                     'Iniciar sesion',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 38,
                     ),
-                  ), // Replace with your image
-
+                  ),
                   const SizedBox(height: 20),
-
                   TextFormField(
                     decoration: const InputDecoration(
                       labelText: 'Correo',
@@ -86,7 +83,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   const SizedBox(height: 20),
-
                   TextFormField(
                     decoration: const InputDecoration(
                       labelText: 'Contraseña',
@@ -102,15 +98,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   const SizedBox(height: 20),
-
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // Perform login logic here
-                        print('Login successful!');
+                        // Redirige a la pantalla de agendar cita
+                        Navigator.pushNamed(context, '/agenCitaDetails');
                       }
                     },
                     child: const Text(

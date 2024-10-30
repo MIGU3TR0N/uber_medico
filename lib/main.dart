@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uber_medico/screens/agenda_cita_data_screen.dart';
 import 'package:uber_medico/screens/conductor_data_screen.dart';
 import 'package:uber_medico/screens/doctor_data_screen.dart';
 import 'package:uber_medico/screens/home_screen.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         "/register": (context) => const RegisterScreen(),
         "/docDetails": (context) => const DoctorDataScreen(),
         "/conDetails": (context) => ConductorDataScreen(),
+        "/agenCitaDetails": (context) => ScheduleAppointmentScreen()
       },
     );
   }
