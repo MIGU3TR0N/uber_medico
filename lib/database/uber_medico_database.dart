@@ -4,7 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:uber_medico/models/conductor_infodao.dart';
+import 'package:uber_medico/models/conductordao.dart';
+import 'package:uber_medico/models/medico_infodao.dart';
+import 'package:uber_medico/models/medicodao.dart';
 import 'package:uber_medico/models/metododao.dart';
+import 'package:uber_medico/models/pacientedao.dart';
 import 'package:uber_medico/models/roldao.dart';
 import 'package:uber_medico/models/tipo_vehiculodao.dart';
 import 'package:uber_medico/models/usuario_roldao.dart';
@@ -213,50 +218,146 @@ class UberMedicoDatabase {
     return result.map((obj) => UsuarioRolDAO.fromMap(obj)).toList(); 
   }
 
-  
-
-  /*
-   Future<dynamic> obtenerLista() async {
-        final db = await DatabaseHandler.database;
-        
-        final listTodo = await db.rawQuery("SELECT * FROM todos 
-        WHERE id LIKE 1");
-
-        return listInfPerson;
-      }
-  */
-
   Future<List<VehiculoDAO>?> selectVehiculo() async {
     var con = await database;
     var result = await con.query('vehiculo');
     return result.map((obj) => VehiculoDAO.fromMap(obj)).toList(); 
   }
 
-   Future<List<DetalleServicioDAO>?> selectDetalleServicioespec(int id) async {
+  Future<List<MedicoDAO>?> selectMedico() async {
     var con = await database;
-    var result = await con.query('detalle_servicio',where: 'id_tipo_servicio = ?',whereArgs: [id]);
-    return result.map((obj) => DetalleServicioDAO.fromMap(obj)).toList(); 
+    var result = await con.query('medico');
+    return result.map((obj) => MedicoDAO.fromMap(obj)).toList(); 
   }
 
-  Future<List<ServicioDAO>?> selectServicio() async {
+  Future<List<ConductorDAO>?> selectConductor() async {
     var con = await database;
-    var result = await con.query('servicio');
-    return result.map((obj) => ServicioDAO.fromMap(obj)).toList(); 
+    var result = await con.query('conductor');
+    return result.map((obj) => ConductorDAO.fromMap(obj)).toList(); 
   }
 
-  Future<List<HistorialDAO>?> selectHistorial() async {
+  Future<List<PacienteDAO>?> selectPaciente() async{
     var con = await database;
-
-    // Ejecuta una consulta SQL con un JOIN entre las tablas `servicio` y `cliente`.
     var result = await con.rawQuery('''
-      SELECT servicio.id, servicio.fecha, servicio.id_cliente, servicio.id_detalle_servicio, 
-            servicio.id_status, servicio.id_empleado, cliente.nombre, cliente.apellido,
-            cliente.id AS cliente_id 
-      FROM servicio
-      INNER JOIN cliente ON servicio.id_cliente = cliente.id
+        SELECT u.id as id_usuario , 
+               u.correo, u.nombre, 
+               u.apellido_paterno, 
+               u.apellido_materno, 
+               u.telefono, u.domicilio, 
+               u.sexo, u.foto, r.rol from usuario_rol ur 
+               join usuario u on u.id = ur.id_usuario 
+               join rol r on r.id = ur.id_rol where r.rol = "paciente"
     ''');
-
-    // Mapea el resultado a una lista de objetos HistorialDAO
-    return result.map((obj) => HistorialDAO.fromMap(obj)).toList();
+    return result.map((obj) => PacienteDAO.fromMap(obj)).toList();
   }
+
+  Future<List<PacienteDAO>?> getOnePaciente(int id) async{
+    var con = await database;
+    var result = await con.rawQuery('''
+        SELECT u.id as id_usuario , 
+               u.correo, u.nombre, 
+               u.apellido_paterno, 
+               u.apellido_materno, 
+               u.telefono, u.domicilio, 
+               u.sexo, u.foto, r.rol from usuario_rol ur 
+               join usuario u on u.id = ur.id_usuario 
+               join rol r on r.id = ur.id_rol where r.rol = "paciente" and i.id = ${id}
+    ''');
+    return result.map((obj) => PacienteDAO.fromMap(obj)).toList();
+  }
+
+  Future<List<MedicoInfoDAO>?> selectMedicos() async{
+    var con = await database;
+    var result = await con.rawQuery('''
+        SELECT u.id as id_usuario , 
+               u.correo, u.nombre, 
+               u.apellido_paterno, 
+               u.apellido_materno, 
+               u.telefono, u.domicilio, 
+               u.sexo, u.foto, r.rol, 
+               m.id as id_medico , 
+               m.especialidad,
+               m.hora_inicio,
+               m.hora_fin,
+               m.dias,
+               m.disponible 
+               from usuario_rol ur 
+               join usuario u on u.id = ur.id_usuario 
+               join rol r on r.id = ur.id_rol 
+               join medico m on m.id_usuario = u.id
+               where r.rol = "medico"
+    ''');
+    return result.map((obj) => MedicoInfoDAO.fromMap(obj)).toList();
+  }
+
+  Future<List<MedicoInfoDAO>?> getOneMedico(int id) async{
+    var con = await database;
+    var result = await con.rawQuery('''
+        SELECT u.id as id_usuario , 
+               u.correo, u.nombre, 
+               u.apellido_paterno, 
+               u.apellido_materno, 
+               u.telefono, u.domicilio, 
+               u.sexo, u.foto, r.rol, 
+               m.id as id_medico , 
+               m.especialidad,
+               m.hora_inicio,
+               m.hora_fin,
+               m.dias,
+               m.disponible 
+               from usuario_rol ur 
+               join usuario u on u.id = ur.id_usuario 
+               join rol r on r.id = ur.id_rol 
+               join medico m on m.id_usuario = u.id
+               where r.rol = "medico" and u.id = ${id}
+    ''');
+    return result.map((obj) => MedicoInfoDAO.fromMap(obj)).toList();
+  }
+
+  Future<List<ConductorInfoDAO>?> selectConductores() async{
+    var con = await database;
+    var result = await con.rawQuery('''
+        SELECT u.id as id_usuario , 
+               u.correo, u.nombre, 
+               u.apellido_paterno, 
+               u.apellido_materno, 
+               u.telefono, u.domicilio, 
+               u.sexo, u.foto, r.rol, 
+               c.id as id_conductor , 
+               c.modelo, tv.tipo_vehiculo, 
+               c.placas
+               from usuario_rol ur 
+               join usuario u on u.id = ur.id_usuario 
+               join rol r on r.id = ur.id_rol 
+               join conductor c on c.id_usuario = u.id 
+               join vehiculo vehiculo v on v.id = c.id_vehiculo 
+               join tipo_vehiculo tv.id = v.id_tipo_vehiculo 
+               where r.rol = "paciente"
+    ''');
+    return result.map((obj) => ConductorInfoDAO.fromMap(obj)).toList();
+  }
+
+  Future<List<ConductorInfoDAO>?> getOneConductor(int id) async{
+    var con = await database;
+    var result = await con.rawQuery('''
+        SELECT u.id as id_usuario , 
+               u.correo, u.nombre, 
+               u.apellido_paterno, 
+               u.apellido_materno, 
+               u.telefono, u.domicilio, 
+               u.sexo, u.foto, r.rol, 
+               c.id as id_conductor , 
+               c.modelo, tv.tipo_vehiculo, 
+               c.placas
+               from usuario_rol ur 
+               join usuario u on u.id = ur.id_usuario 
+               join rol r on r.id = ur.id_rol 
+               join conductor c on c.id_usuario = u.id 
+               join vehiculo vehiculo v on v.id = c.id_vehiculo 
+               join tipo_vehiculo tv.id = v.id_tipo_vehiculo 
+               where r.rol = "paciente" and u.id = ${id}
+    ''');
+    return result.map((obj) => ConductorInfoDAO.fromMap(obj)).toList();
+  }
+
 }
